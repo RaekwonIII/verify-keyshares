@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { Switch } from "@headlessui/react";
 import { getOwnerNonceAtBlock, getValidatorRegistrationData } from "./subgraph";
@@ -38,9 +37,9 @@ function App() {
       let { sharesObjArr, blockNumber, ownerAddress } =
         validatorRegistrationData;
 
-      let initialNonce = await getOwnerNonceAtBlock(ownerAddress, blockNumber);
+      let initialNonce = await getOwnerNonceAtBlock(ownerAddress, blockNumber, url);
       console.info(
-        `Starting owner nonce ${initialNonce} for owner ${ownerAddress}`
+        `Starting owner nonce ${initialNonce} for owner ${ownerAddress} on block ${blockNumber}`
       );
   
       console.info("Verifying Keyshares validity");
