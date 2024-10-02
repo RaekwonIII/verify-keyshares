@@ -64,7 +64,7 @@ export async function getValidatorRegistrationData(
     });
     returnData = {
       sharesObjArr: validatorData,
-      blockNumber: parseInt(result[0].blockNumber),
+      blockNumber: parseInt(result[0].blockNumber) - 1,
       ownerAddress: result[0].owner,
     };
   } catch (err) {
