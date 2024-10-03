@@ -43,7 +43,6 @@ export async function getValidatorRegistrationData(
     validatorData = result.map((item: any) => {
       console.info(`Found pubkey: ${item.publicKey}`);
       return {
-        keySharesFilePath: "",
         data: {
           ownerNonce: 0,
           ownerAddress: item.owner,
@@ -95,6 +94,41 @@ export async function getOwnerNonceAtBlock(
             }
           }`,
         variables: { owner: owner, block: block },
+      },
+    });
+    if (response.status !== 200) throw Error("Request did not return OK");
+    if (!response.data && !response.data.data && !response.data.data.account) {
+      console.error("No data found");
+    } else {
+      nonce = Number(response.data.data.account.nonce);
+    }
+  } catch (err) {
+    console.error("ERROR DURING AXIOS REQUEST", err);
+  } finally {
+    return nonce;
+  }
+}
+
+export async function getCurrentOwnerNonce(
+  owner: string,
+  subgraph_endpoint: string
+): Promise<number> {
+  let nonce = 0;
+  try {
+    const response = await axios({
+      method: "POST",
+      url: subgraph_endpoint,
+      headers: {
+        "content-type": "application/json",
+      },
+      data: {
+        query: `
+          query accountNonce($owner: ID!, $block: Int) {
+            account(id: $owner) {
+                nonce
+            }
+          }`,
+        variables: { owner: owner },
       },
     });
     if (response.status !== 200) throw Error("Request did not return OK");
