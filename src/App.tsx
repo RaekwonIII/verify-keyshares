@@ -132,7 +132,7 @@ function App() {
                       key={index}
                       className="text-center align-middle text-white"
                     >
-                      <td className="px-4 py-2 break-all">{pubkey[0].substring(0, 5)}...{pubkey[0].substring((pubkey[0].length - 5))}</td>
+                      <td className="px-4 py-2 break-all">{pubkey[0].substring(0, 8)} ... {pubkey[0].substring((pubkey[0].length - 6))}</td>
                       <td className="px-4 py-2">{ pubkey[1] ? "True" : "False" }</td>
                     </tr>
                   ))}
