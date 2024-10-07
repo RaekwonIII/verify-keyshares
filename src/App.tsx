@@ -10,6 +10,16 @@ import { useState } from "react";
 function App() {
   const [testnet, setTestnet] = useState(false);
   return (
+    <div>
+      <div className="fixed top-3 right-5">
+        <a href="https://github.com/RaekwonIII/verify-keyshares" target="_blank">
+        <img
+            src="github-mark-white.svg"
+            alt="GitHub Logo"
+            className="h-8"
+          />
+          </a>
+      </div>
     <div className="flex justify-center items-center min-h-screen bg-[#0E0E52]">
       <div className="bg-[#0E0E52] shadow-md rounded-lg p-8 w-full max-w-md">
         <div className="flex justify-center mb-6">
@@ -58,6 +68,7 @@ function App() {
           </TabPanels>
         </TabGroup>
       </div>
+    </div>
     </div>
   );
 }
