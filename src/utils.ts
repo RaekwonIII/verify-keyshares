@@ -9,7 +9,6 @@ export type ClusterSnapshot = {
 };
 
 export type ShareObject = {
-  keySharesFilePath: string;
   data: {
     ownerNonce: number;
     ownerAddress: string;
