@@ -47,7 +47,7 @@ function App() {
                   pointer-events-none inline-block h-[17px] w-[17px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
             />
           </Switch>
-          <span className="text-white font-medium ml-4">Holesky</span>
+          <span className="text-white font-medium ml-4">Hoodi</span>
         </div>
         <TabGroup>
           <TabList className="flex justify-center items-center shadow-md rounded-lg w-full max-w-md">

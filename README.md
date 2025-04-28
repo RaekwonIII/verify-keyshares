@@ -70,11 +70,11 @@ You will also see any lint errors in the console.
 
 ## Environment variables
 
-The webapp needs two environment variables, indicating the endpoint of a Subgraph API. One for Mainnet, and one for Holesky:
+The webapp needs two environment variables, indicating the endpoint of a Subgraph API. One for Mainnet, and one for Hoodi:
 
 ```sh
-# e.g.: "https://api.studio.thegraph.com/query/71118/ssv-network-holesky/version/latest"
-REACT_APP_SUBGRAPH_API_HOLESKY=
+# e.g.: "https://api.studio.thegraph.com/query/71118/ssv-network-hoodi/version/latest"
+REACT_APP_SUBGRAPH_API_HOODI=
 # e.g. "https://api.studio.thegraph.com/query/71118/ssv-network-ethereum/version/latest"
 REACT_APP_SUBGRAPH_API_MAINNET=
 ```
