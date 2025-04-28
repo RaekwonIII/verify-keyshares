@@ -20,7 +20,7 @@ function VerifyPostRegistration(props: { isTestnet: boolean }) {
 
     let url;
     if (props.isTestnet) {
-      url = process.env.REACT_APP_SUBGRAPH_API_HOLESKY;
+      url = process.env.REACT_APP_SUBGRAPH_API_HOODI;
     } else {
       url = process.env.REACT_APP_SUBGRAPH_API_MAINNET;
     }
