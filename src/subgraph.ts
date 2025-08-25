@@ -88,19 +88,21 @@ export async function getOwnerNonceAtBlock(
       },
       data: {
         query: `
-          query accountNonce($owner: ID!, $block: Int) {
-            account(id: $owner, block: {number: $block}) {
-                nonce
+          query validatorAddedAtBlock($owner: ID!, $block: Int) {
+            validatorAddeds(
+              where: {blockNumber_lt: $block, owner: $owner}
+            ) {
+              id
             }
           }`,
         variables: { owner: owner, block: block },
       },
     });
     if (response.status !== 200) throw Error("Request did not return OK");
-    if (!response.data && !response.data.data && !response.data.data.account) {
+    if (!response.data && !response.data.data && !response.data.data.validatorAddeds) {
       console.error("No data found");
     } else {
-      nonce = Number(response.data.data.account.nonce);
+      nonce = response.data.data.validatorAddeds.length;
     }
   } catch (err) {
     console.error("ERROR DURING AXIOS REQUEST", err);
