@@ -80,29 +80,37 @@ export async function getOwnerNonceAtBlock(
 ): Promise<number> {
   let nonce = 0;
   try {
-    const response = await axios({
-      method: "POST",
-      url: subgraph_endpoint,
-      headers: {
-        "content-type": "application/json",
-      },
-      data: {
-        query: `
-          query validatorAddedAtBlock($owner: ID!, $block: Int) {
-            validatorAddeds(
-              where: {blockNumber_lt: $block, owner: $owner}
-            ) {
-              id
-            }
-          }`,
-        variables: { owner: owner, block: block },
-      },
-    });
-    if (response.status !== 200) throw Error("Request did not return OK");
-    if (!response.data && !response.data.data && !response.data.data.validatorAddeds) {
-      console.error("No data found");
-    } else {
-      nonce = response.data.data.validatorAddeds.length;
+    let gotResponse = true;
+    let first = 1000;
+    let skip = 0;
+    while (gotResponse) {
+      const response = await axios({
+        method: "POST",
+        url: subgraph_endpoint,
+        headers: {
+          "content-type": "application/json",
+        },
+        data: {
+          query: `
+            query validatorAddedAtBlock($owner: Bytes!, $block: BigInt, $first: Int, $skip: Int) {
+              validatorAddeds(
+                where: {blockNumber_lt: $block, owner: $owner,}, first: $first, skip: $skip, orderDirection: asc, orderBy: blockTimestamp
+              ) {
+                publicKey
+              }
+            }`,
+          variables: { owner: owner, block: block, first: first, skip: skip },
+        },
+      });
+      if (response.status !== 200) throw Error("Request did not return OK");
+      if (!response.data || !response.data.data || !response.data.data.validatorAddeds || response.data.data.validatorAddeds.length < 1) {
+        console.error("No data found");
+        gotResponse = false;
+      } else {
+        nonce += response.data.data.validatorAddeds.length;
+        console.log(`Updating user nonce: ${nonce}, explored first ${first} validatorAdded events`)
+        skip += first;
+      }
     }
   } catch (err) {
     console.error("ERROR DURING AXIOS REQUEST", err);
